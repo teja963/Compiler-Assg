@@ -1,6 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-
 typedef struct node{
 	int val;   //value of a number for NUM nodes
 	char *op;   //name of a variable
@@ -12,3 +9,8 @@ typedef struct node{
 
 struct node* makeLeafNode(int n);
 struct node* makeOperatorsNode(char op, struct node* l, struct node* r);
+
+
+int codeGen(struct node* t);
+void prt(int);
+

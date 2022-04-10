@@ -72,10 +72,14 @@
 	#include<stdio.h>
 	#include<stdlib.h>
 	#include"exptree.c"
+	#include"codeGen.c"
 	
 	int yylex(void);
+	extern FILE *yyin;
+	FILE *fp;
+	FILE *targetFile;
 
-#line 79 "y.tab.c"
+#line 83 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -144,11 +148,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 9 "exptree.y"
+#line 13 "exptree.y"
 
 	struct node* number; //for changing the type we r using this for yylval
 
-#line 152 "y.tab.c"
+#line 156 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -560,7 +564,7 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    20,    20,    27,    28,    29,    30,    31,    32
+       0,    24,    24,    31,    32,    33,    34,    35,    36
 };
 #endif
 
@@ -1138,53 +1142,53 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: exp END  */
-#line 20 "exptree.y"
+#line 24 "exptree.y"
                   {
 						(yyval.number) = (yyvsp[0].number);
-						printf("Final_result: %d\n", evaluate((yyvsp[-1].number)));
-						exit(1);
+						int val = codeGen((yyvsp[-1].number));
+						prt(val);
 					}
-#line 1148 "y.tab.c"
+#line 1152 "y.tab.c"
     break;
 
   case 3: /* exp: exp PLUS exp  */
-#line 27 "exptree.y"
+#line 31 "exptree.y"
                         {(yyval.number) = makeOperatorsNode('+', (yyvsp[-2].number), (yyvsp[0].number));}
-#line 1154 "y.tab.c"
+#line 1158 "y.tab.c"
     break;
 
   case 4: /* exp: exp MINUS exp  */
-#line 28 "exptree.y"
+#line 32 "exptree.y"
                         {(yyval.number) = makeOperatorsNode('-', (yyvsp[-2].number), (yyvsp[0].number));}
-#line 1160 "y.tab.c"
+#line 1164 "y.tab.c"
     break;
 
   case 5: /* exp: exp DIV exp  */
-#line 29 "exptree.y"
+#line 33 "exptree.y"
                       {(yyval.number) = makeOperatorsNode('/', (yyvsp[-2].number), (yyvsp[0].number));}
-#line 1166 "y.tab.c"
+#line 1170 "y.tab.c"
     break;
 
   case 6: /* exp: exp MUL exp  */
-#line 30 "exptree.y"
+#line 34 "exptree.y"
                       {(yyval.number) = makeOperatorsNode('*', (yyvsp[-2].number), (yyvsp[0].number));}
-#line 1172 "y.tab.c"
+#line 1176 "y.tab.c"
     break;
 
   case 7: /* exp: '(' exp ')'  */
-#line 31 "exptree.y"
+#line 35 "exptree.y"
                       {(yyval.number) = (yyvsp[-1].number);}
-#line 1178 "y.tab.c"
+#line 1182 "y.tab.c"
     break;
 
   case 8: /* exp: NUM  */
-#line 32 "exptree.y"
+#line 36 "exptree.y"
               {(yyval.number) = (yyvsp[0].number);}
-#line 1184 "y.tab.c"
+#line 1188 "y.tab.c"
     break;
 
 
-#line 1188 "y.tab.c"
+#line 1192 "y.tab.c"
 
       default: break;
     }
@@ -1378,14 +1382,52 @@ yyreturn:
   return yyresult;
 }
 
-#line 35 "exptree.y"
+#line 39 "exptree.y"
 
+
+void prt(int r) {
+    fprintf(targetFile, "MOV R2, \"Write\"\n");
+    fprintf(targetFile, "PUSH R2\n");
+    fprintf(targetFile, "MOV R2, -1\n");
+    fprintf(targetFile, "PUSH R2\n");
+    fprintf(targetFile, "PUSH R%d\n", r);
+    fprintf(targetFile, "PUSH R2\n");
+    fprintf(targetFile, "PUSH R2\n");
+    fprintf(targetFile, "CALL 0\n");
+    fprintf(targetFile, "POP R0\n");
+    fprintf(targetFile, "POP R1\n");
+    fprintf(targetFile, "POP R1\n");
+    fprintf(targetFile, "POP R1\n");
+    fprintf(targetFile, "POP R1\n");
+    fprintf(targetFile, "MOV R2, \"Exit\"\n");
+    fprintf(targetFile, "PUSH R2\n");
+    fprintf(targetFile, "PUSH R2\n");
+    fprintf(targetFile, "PUSH R2\n");
+    fprintf(targetFile, "PUSH R2\n");
+    fprintf(targetFile, "PUSH R2\n");
+    fprintf(targetFile, "CALL 0\n");
+    exit(1);
+}
 
 int yyerror(char const* s){
 	printf("yyerror %s", s);
 }
 
-int main(void){
+int main(int argc, char *argv[]){
+	if (argc < 2) {
+        printf("Enter filename Properly\n");
+        exit(1);
+    } else {
+        targetFile = fopen("target_file.xsm", "w");
+        fprintf(targetFile, "0\n2056\n0\n0\n0\n0\n0\n0\n");
+        fp = fopen(argv[1], "r");
+        if (!fp) {
+            printf("Invalid input file selected\n");
+            exit(1);
+        } else {
+            yyin = fp;
+        }
+    }
 	yyparse();
 	return 0;
 }

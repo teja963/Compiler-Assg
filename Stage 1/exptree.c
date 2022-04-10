@@ -1,21 +1,4 @@
 #include"exptree.h"
-
-int reg_number = -1;
-
-int getReg(){
-	reg_number += 1;
-	return reg_number;
-}
-
-int freeReg(){
-	reg_number -= 1;
-	return reg_number;
-}
-
-int codeGen(struct node* t, FILE *targetfile){
-	
-}
-
 int evaluate(struct node* t){
 	if(t->op == NULL){
 		return t->val;
