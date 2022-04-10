@@ -23,8 +23,7 @@
 %%
 program : exp END {
 						$$ = $2;
-						int val = codeGen($1);
-						prt(val);
+						codeGen($1);
 					}
 		;
 		
@@ -38,29 +37,7 @@ exp : exp PLUS exp	{$$ = makeOperatorsNode('+', $1, $3);}
 	
 %%
 
-void prt(int r) {
-    fprintf(targetFile, "MOV R2, \"Write\"\n");
-    fprintf(targetFile, "PUSH R2\n");
-    fprintf(targetFile, "MOV R2, -1\n");
-    fprintf(targetFile, "PUSH R2\n");
-    fprintf(targetFile, "PUSH R%d\n", r);
-    fprintf(targetFile, "PUSH R2\n");
-    fprintf(targetFile, "PUSH R2\n");
-    fprintf(targetFile, "CALL 0\n");
-    fprintf(targetFile, "POP R0\n");
-    fprintf(targetFile, "POP R1\n");
-    fprintf(targetFile, "POP R1\n");
-    fprintf(targetFile, "POP R1\n");
-    fprintf(targetFile, "POP R1\n");
-    fprintf(targetFile, "MOV R2, \"Exit\"\n");
-    fprintf(targetFile, "PUSH R2\n");
-    fprintf(targetFile, "PUSH R2\n");
-    fprintf(targetFile, "PUSH R2\n");
-    fprintf(targetFile, "PUSH R2\n");
-    fprintf(targetFile, "PUSH R2\n");
-    fprintf(targetFile, "CALL 0\n");
-    exit(1);
-}
+
 
 int yyerror(char const* s){
 	printf("yyerror %s", s);

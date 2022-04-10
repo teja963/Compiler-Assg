@@ -12,5 +12,4 @@ struct node* makeOperatorsNode(char op, struct node* l, struct node* r);
 
 
 int codeGen(struct node* t);
-void prt(int);
 
