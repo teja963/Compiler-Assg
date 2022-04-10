@@ -1,5 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
 #include"exptree.h"
 
 int reg_number = -1;
