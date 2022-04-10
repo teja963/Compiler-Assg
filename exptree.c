@@ -3,8 +3,6 @@
 #include"exptree.h"
 
 int reg_number = -1;
-struct node* makeLeafNode(int n);
-struct node* makeOperatorsNode(char op, struct node* l, struct node* r);
 
 int getReg(){
 	reg_number += 1;
@@ -12,7 +10,8 @@ int getReg(){
 }
 
 int freeReg(){
-	return reg_number--;
+	reg_number -= 1;
+	return reg_number;
 }
 
 int codeGen(struct node* t, FILE *targetfile){
@@ -20,13 +19,43 @@ int codeGen(struct node* t, FILE *targetfile){
 }
 
 int evaluate(struct node* t){
-	
+	if(t->op == NULL){
+		return t->val;
+	}
+	else{
+		switch(*(t->op)){
+			case '+': return evaluate(t->left) + evaluate(t->right);
+					  break;
+					  
+			case '-': return evaluate(t->left) - evaluate(t->right);
+					  break;
+					  
+			case '*': return evaluate(t->left) * evaluate(t->right);
+					  break;
+					  
+			case '/': return evaluate(t->left) / evaluate(t->right);
+					  break;			  
+		}
+	}
 }
 
-int main(){
-
-	return 0;
-	
-	
+struct node* makeLeafNode(int n){
+	struct node* tmp;
+	tmp = (struct node*)malloc(sizeof(struct node));
+	tmp->val = n;
+	tmp->op = NULL;
+	tmp->type = -1;
+	tmp->left = NULL;
+	tmp->right = NULL;
 }
+
+struct node* makeOperatorsNode(char op, struct node* l, struct node* r){
+	struct node* tmp;
+	tmp = (struct node*)malloc(sizeof(struct node));
+	tmp->op = malloc(sizeof(char));
+	*(tmp->op) = op;
+	tmp->left = l;
+	tmp->right = r;
+	return tmp;
+} 
 

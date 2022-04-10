@@ -9,13 +9,13 @@
 
 %%
 
-[0-9]+ {numbers = atoi(yytext); yylval.no = numbers; return NUM; }
+[0-9]+ {numbers = atoi(yytext); yylval.number = makeLeafNode(numbers); return NUM; }
 "+" {return PLUS;}
 "-" {return MINUS;}
 "*" {return MUL;}
 "/" {return DIV;}
 [ /t] {}
-[()] {return **yytext;}  //read again from the user
+[()] {return *yytext;}  //read again from the user
 [\n] {return END;}
 . {yyerror("Characters Mismatched\n"); exit(1);}
 

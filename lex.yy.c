@@ -443,12 +443,12 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "1.l"
-#line 2 "1.l"
+#line 1 "exptree.l"
+#line 2 "exptree.l"
 	#include<stdio.h>
 	#include<stdlib.h>
-	#include"expression_tree.h"
-	//#include"y.tab.h"
+	#include"exptree.h"
+	#include"y.tab.h"
 	
 	int numbers;
 #line 455 "lex.yy.c"
@@ -669,7 +669,7 @@ YY_DECL
 		}
 
 	{
-#line 10 "1.l"
+#line 10 "exptree.l"
 
 
 #line 676 "lex.yy.c"
@@ -731,53 +731,53 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 12 "1.l"
-{numbers = atoi(yytext); yylval.no = numbers; return NUM; }
+#line 12 "exptree.l"
+{numbers = atoi(yytext); yylval.number = makeLeafNode(numbers); return NUM; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 13 "1.l"
+#line 13 "exptree.l"
 {return PLUS;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 14 "1.l"
+#line 14 "exptree.l"
 {return MINUS;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 15 "1.l"
+#line 15 "exptree.l"
 {return MUL;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "1.l"
+#line 16 "exptree.l"
 {return DIV;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "1.l"
+#line 17 "exptree.l"
 {}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "1.l"
-{return **yytext;}  //read again from the user
+#line 18 "exptree.l"
+{return *yytext;}  //read again from the user
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 19 "1.l"
+#line 19 "exptree.l"
 {return END;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 20 "1.l"
+#line 20 "exptree.l"
 {yyerror("Characters Mismatched\n"); exit(1);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 22 "1.l"
+#line 22 "exptree.l"
 ECHO;
 	YY_BREAK
 #line 784 "lex.yy.c"
@@ -1785,7 +1785,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 22 "1.l"
+#line 22 "exptree.l"
 
 
 int yywrap(void){
