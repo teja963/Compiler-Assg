@@ -12,7 +12,7 @@
 
 [0-9]+ {
 		numbers = atoi(yytext); 
-		yylval.nptr = createTree(0 ,number, NODE_NUM, NULL, NULL);
+		yylval.nptr = createTree(0 ,numbers, NODE_NUM, NULL, NULL, NULL);
 		return NUM; 
 		}
 "begin" {return START;}
@@ -25,7 +25,8 @@
 "/" {return DIV;}
 "=" {return ASSGN;}
 [ \t\n] {}
-[();] {return *yytext;}  //read again from the user
+"FUN" {return FUN;}
+[{}();] {return *yytext;}  //read again from the user
 [a-z] {
 		variable = (char*)malloc(sizeof(yytext));
 		strcpy(variable, yytext);

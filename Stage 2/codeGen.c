@@ -56,9 +56,54 @@ int codeGen(struct node* t){
 	    			    reg_2 = codeGen(t->right);
 	    				fprintf(targetFile, "DIV R%d, R%d\n", reg_1, reg_2);
 	    		   		freeReg();
-	    		   		return reg_1;  
-	    		   		
-	    case NODE_ASSG: number = 4096 + t->left->varname[0] - 'a';
+	    		   		return reg_1; 
+	    		   		 		   		
+	    case NODE_ASSGN: number = 4096 + t->left->varname[0] - 'a';
+	                    reg_2 = codeGen(t->right);
+	                    fprintf(targetFile, "MOV [%d], R%d\n", number, reg_2);
+	                    freeReg();
+	                    return 0;
+	                    
+	    case NODE_WRITE: for(int i = 0; i <= reg_number; i++)
+	    					fprintf(targetFile, "PUSH R%d\n", i);
+	    				 status = reg_number;
+	    				 
+	    				 fprintf(targetFile, "MOV R0,\"Write\"\n");
+	    				 fprintf(targetFile, "PUSH R0\n"); //function code
+	    				 fprintf(targetFile, "MOV R0,-2\n");
+	    				 fprintf(targetFile, "PUSH R0\n"); //Arguement 1
+	    				 
+	    				 reg_1 = codeGen(t->left);
+	    				 fprintf(targetFile, "PUSH R%d\n", reg_1);
+	    				 freeReg();
+	    				 fprintf(targetFile, "ADD SP,2\n");
+	    				 fprintf(targetFile, "CALL 0\n");
+	    				 fprintf(targetFile, "SUB SP,5\n");
+	    				 
+	    				 for(int i = status; i >= 0; i--)
+	    				 	fprintf(targetFile, "POP R%d\n", i);
+	    				 reg_number = status;
+	    				 break;
+	    				 
+	    case NODE_READ: number = 4096 + t->left->varname[0] - 'a';
+	    				for(int i = 0; i <= reg_number; i++)
+	    					fprintf(targetFile, "PUSH R%d\n", i);
+	    				status = reg_number;
+	    				
+	    				fprintf(targetFile, "MOV R0,\"Read\"\n");
+	    				fprintf(targetFile, "PUSH R0\n"); //function code
+	    				fprintf(targetFile, "MOV R0,-1\n");
+	    				fprintf(targetFile, "PUSH R0\n"); //argument 1
+	    				fprintf(targetFile, "MOV R0,%d\n", number);
+	    				fprintf(targetFile, "PUSH R0\n"); //argument 1
+	    				fprintf(targetFile, "ADD SP,2\n");
+	    				fprintf(targetFile, "CALL 0\n");
+	    				fprintf(targetFile, "SUB SP,5\n");
+	    				
+	    				for(int i = status; i >= 0; i--)
+	    					fprintf(targetFile, "POP R%d\n", i);
+	    				reg_number = status;
+	    				break; 
 	    		   
 	 }
 }

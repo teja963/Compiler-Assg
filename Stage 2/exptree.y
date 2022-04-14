@@ -3,6 +3,7 @@
 	#include<stdlib.h>
 	#include"exptree.c"
 	#include"codeGen.c"
+	#include"init_code.c"
 	
 	int yylex(void);
 	extern FILE *yyin;
@@ -14,23 +15,18 @@
 	struct node* nptr; //for changing the type we r using this for yylval
 }
 
-%type <nptr> NUM ID START END READ WRITE PLUS MINUS DIV ASSGN//all the non-terminals used in the grammar need to write here
-%type <nptr> program Slist Stmt InputStmt OutputStmt AssgStmt expr
 
-%token START READ WRITE NUM PLUS MINUS MUL DIV END ASSGN ID
+%token START READ WRITE NUM PLUS MINUS MUL DIV END ASSGN ID FUN
 %left PLUS MINUS
 %left MUL DIV
 
+%type <nptr> NUM ID START END READ WRITE PLUS MINUS DIV ASSGN//all the non-terminals used in the grammar need to write here
+%type <nptr> program Slist Stmt InputStmt OutputStmt AssgStmt exp
 
 %%
-program : START Slist END ';' {
-						$$ = $3;
-						init_code();
-						codeGen($2);
-						fclose(targetFile);
-					}
-		| START END ';' {$$ = $2;}
-		;
+program : FUN '('  ')' '{' Slist '}' {       //there is only one funnction that returns an integer
+					codeGen($5);
+			}
 		
 exp : exp PLUS exp	{$$ = createTree(1, 0, NODE_PLUS, NULL, $1, $3);}	
 	| exp MINUS exp {$$ = createTree(1, 0, NODE_MINUS, NULL, $1, $3);}
