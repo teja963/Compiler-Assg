@@ -1,1 +1,7 @@
-2*(3*5) + 12/3 - 2 + 10
+FUN () {
+read ( abc );
+read ( pqr );
+read ( stu );
+read (fuckabc);
+write ( abc );
+}

@@ -91,7 +91,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "exptree.y"
+#line 13 "exptree.y"
 
 	struct node* nptr; //for changing the type we r using this for yylval
 

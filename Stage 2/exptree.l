@@ -15,8 +15,7 @@
 		yylval.nptr = createTree(0 ,numbers, NODE_NUM, NULL, NULL, NULL);
 		return NUM; 
 		}
-"begin" {return START;}
-"end" {return END;}
+
 "read" {return READ;}
 "write" {return WRITE;}
 "+" {return PLUS;}
@@ -27,7 +26,7 @@
 [ \t\n] {}
 "FUN" {return FUN;}
 [{}();] {return *yytext;}  //read again from the user
-[a-z] {
+[a-z]+ {
 		variable = (char*)malloc(sizeof(yytext));
 		strcpy(variable, yytext);
 		yylval.nptr = createTree(1, 0, NODE_ID, variable, NULL, NULL);

@@ -73,14 +73,13 @@
 	#include<stdlib.h>
 	#include"exptree.c"
 	#include"codeGen.c"
-	#include"init_code.c"
 	
 	int yylex(void);
 	extern FILE *yyin;
 	FILE *fp;
 	FILE *targetFile;
 
-#line 84 "y.tab.c"
+#line 83 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -161,11 +160,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "exptree.y"
+#line 13 "exptree.y"
 
 	struct node* nptr; //for changing the type we r using this for yylval
 
-#line 169 "y.tab.c"
+#line 168 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -591,8 +590,8 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    27,    27,    31,    32,    33,    34,    35,    36,    37,
-      40,    41,    44,    45,    46,    48,    51,    54
+       0,    26,    26,    30,    31,    32,    33,    34,    35,    36,
+      39,    40,    43,    44,    45,    47,    52,    55
 };
 #endif
 
@@ -1187,105 +1186,107 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: FUN '(' ')' '{' Slist '}'  */
-#line 27 "exptree.y"
+#line 26 "exptree.y"
                                      {       //there is only one funnction that returns an integer
 					codeGen((yyvsp[-1].nptr));
 			}
-#line 1195 "y.tab.c"
+#line 1194 "y.tab.c"
     break;
 
   case 3: /* exp: exp PLUS exp  */
-#line 31 "exptree.y"
+#line 30 "exptree.y"
                         {(yyval.nptr) = createTree(1, 0, NODE_PLUS, NULL, (yyvsp[-2].nptr), (yyvsp[0].nptr));}
-#line 1201 "y.tab.c"
+#line 1200 "y.tab.c"
     break;
 
   case 4: /* exp: exp MINUS exp  */
-#line 32 "exptree.y"
+#line 31 "exptree.y"
                         {(yyval.nptr) = createTree(1, 0, NODE_MINUS, NULL, (yyvsp[-2].nptr), (yyvsp[0].nptr));}
-#line 1207 "y.tab.c"
+#line 1206 "y.tab.c"
     break;
 
   case 5: /* exp: exp DIV exp  */
-#line 33 "exptree.y"
+#line 32 "exptree.y"
                       {(yyval.nptr) = createTree(1, 0, NODE_MUL, NULL, (yyvsp[-2].nptr), (yyvsp[0].nptr));}
-#line 1213 "y.tab.c"
+#line 1212 "y.tab.c"
     break;
 
   case 6: /* exp: exp MUL exp  */
-#line 34 "exptree.y"
+#line 33 "exptree.y"
                       {(yyval.nptr) = createTree(1, 0, NODE_DIV, NULL, (yyvsp[-2].nptr), (yyvsp[0].nptr));}
-#line 1219 "y.tab.c"
+#line 1218 "y.tab.c"
     break;
 
   case 7: /* exp: '(' exp ')'  */
-#line 35 "exptree.y"
+#line 34 "exptree.y"
                       {(yyval.nptr) = (yyvsp[-1].nptr);}
-#line 1225 "y.tab.c"
+#line 1224 "y.tab.c"
     break;
 
   case 8: /* exp: NUM  */
-#line 36 "exptree.y"
+#line 35 "exptree.y"
               {(yyval.nptr) = (yyvsp[0].nptr);}
-#line 1231 "y.tab.c"
+#line 1230 "y.tab.c"
     break;
 
   case 9: /* exp: ID  */
-#line 37 "exptree.y"
+#line 36 "exptree.y"
              {(yyval.nptr) = (yyvsp[0].nptr);}
-#line 1237 "y.tab.c"
+#line 1236 "y.tab.c"
     break;
 
   case 10: /* Slist: Slist Stmt  */
-#line 40 "exptree.y"
+#line 39 "exptree.y"
                    {(yyval.nptr) = createTree(1, 0, NODE_CONNECT, NULL, (yyvsp[-1].nptr), (yyvsp[0].nptr));}
-#line 1243 "y.tab.c"
+#line 1242 "y.tab.c"
     break;
 
   case 11: /* Slist: Stmt  */
-#line 41 "exptree.y"
+#line 40 "exptree.y"
              {(yyval.nptr) = (yyvsp[0].nptr);}
-#line 1249 "y.tab.c"
+#line 1248 "y.tab.c"
     break;
 
   case 12: /* Stmt: InputStmt  */
-#line 44 "exptree.y"
+#line 43 "exptree.y"
                  {(yyval.nptr) = (yyvsp[0].nptr);}
-#line 1255 "y.tab.c"
+#line 1254 "y.tab.c"
     break;
 
   case 13: /* Stmt: OutputStmt  */
-#line 45 "exptree.y"
+#line 44 "exptree.y"
                   {(yyval.nptr) = (yyvsp[0].nptr);}
-#line 1261 "y.tab.c"
+#line 1260 "y.tab.c"
     break;
 
   case 14: /* Stmt: AssgStmt  */
-#line 46 "exptree.y"
+#line 45 "exptree.y"
                 {(yyval.nptr) = (yyvsp[0].nptr);}
-#line 1267 "y.tab.c"
+#line 1266 "y.tab.c"
     break;
 
   case 15: /* InputStmt: READ '(' ID ')' ';'  */
-#line 48 "exptree.y"
-                                {(yyval.nptr) = createTree(1, 0, NODE_READ, NULL, (yyvsp[-2].nptr), NULL);}
-#line 1273 "y.tab.c"
+#line 47 "exptree.y"
+                                {
+									printf("%s\n",(yyvsp[-2].nptr)->varname);									
+									(yyval.nptr) = createTree(1, 0, NODE_READ, NULL, (yyvsp[-2].nptr), NULL);}
+#line 1274 "y.tab.c"
     break;
 
   case 16: /* OutputStmt: WRITE '(' exp ')' ';'  */
-#line 51 "exptree.y"
+#line 52 "exptree.y"
                                    {(yyval.nptr) = createTree(1, 0, NODE_WRITE, NULL, (yyvsp[-2].nptr), NULL);}
-#line 1279 "y.tab.c"
+#line 1280 "y.tab.c"
     break;
 
   case 17: /* AssgStmt: ID ASSGN exp ';'  */
-#line 54 "exptree.y"
+#line 55 "exptree.y"
                             {(yyval.nptr) = createTree(1, 0, NODE_ASSGN, NULL, (yyvsp[-3].nptr), (yyvsp[-1].nptr));}
-#line 1285 "y.tab.c"
+#line 1286 "y.tab.c"
     break;
 
 
-#line 1289 "y.tab.c"
+#line 1290 "y.tab.c"
 
       default: break;
     }
@@ -1479,14 +1480,14 @@ yyreturn:
   return yyresult;
 }
 
-#line 57 "exptree.y"
+#line 58 "exptree.y"
 
 
 
 
 int yyerror(char const* s)
 {
-	printf("yyerror %s", s);
+	printf("yyerror %s\n", s);
 }
 
 int main(int argc, char *argv[]){
@@ -1496,6 +1497,9 @@ int main(int argc, char *argv[]){
     } 
     else{
         fp = fopen(argv[1], "r");
+        targetFile = fopen("target_file.xsm", "w");
+	    fprintf(targetFile, "0\n2056\n0\n0\n0\n0\n0\n0\n");
+     	fprintf(targetFile, "ADD SP, 26\n");
         if (!fp){
             printf("Invalid input file selected\n");
             exit(1);
