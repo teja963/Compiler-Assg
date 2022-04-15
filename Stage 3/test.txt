@@ -1,0 +1,7 @@
+FUN () {
+read ( abc );
+read ( pqr );
+read ( stu );
+read (fuckabc);
+write ( abc );
+}
