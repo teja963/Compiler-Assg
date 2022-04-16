@@ -1,6 +1,6 @@
 #include"exptree.h"
 #include<string.h>	
-struct node* createTree(int type, int val, int nodetype, char *name, struct node* left, struct node* right){
+struct node* createTree(int type, int val, int nodetype, char *name, struct node* left, struct node* right, struct node* middle){
 	struct node *tmp;
 	tmp = (struct node*)malloc(sizeof(struct node));
 	tmp->val = val;
@@ -12,6 +12,7 @@ struct node* createTree(int type, int val, int nodetype, char *name, struct node
 	}
 	tmp->left = left;
 	tmp->right = right;
+	tmp->middle = middle;
 	return tmp;
 }
 
