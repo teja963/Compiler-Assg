@@ -71,7 +71,7 @@ int main(int argc, char *argv[]){
     } 
     else{
         fp = fopen(argv[1], "r");
-        targetFile = fopen("target_file.xsm", "w");
+        targetFile = fopen("B191143CS.xsm", "w");
 	    fprintf(targetFile, "0\n2056\n0\n0\n0\n0\n0\n0\n");
      	fprintf(targetFile, "ADD SP, 26\n");
         if (!fp){

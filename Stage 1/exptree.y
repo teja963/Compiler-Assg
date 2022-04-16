@@ -48,7 +48,7 @@ int main(int argc, char *argv[]){
         printf("Enter filename Properly\n");
         exit(1);
     } else {
-        targetFile = fopen("target_file.xsm", "w");
+        targetFile = fopen("B191143CS.xsm", "w");
         fprintf(targetFile, "0\n2056\n0\n0\n0\n0\n0\n0\n");
         fp = fopen(argv[1], "r");
         if (!fp) {
