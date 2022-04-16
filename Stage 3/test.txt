@@ -1,14 +1,12 @@
 FUN () {
-read ( abc );
-read ( pqr );
-read ( stu );
-If ( abc > pqr ) {
-If ( abc > stu ) { write ( abc ); }
-else { write ( stu ); }
-} else {
-If ( pqr > stu ) { write ( pqr ); }
-else { write ( stu ); }
-}
-
-
+read ( f1 );
+f2 = 0;
+f3 = 1;
+do {
+	f4 = f2 + f3;
+    f2 = f3;
+    f3 = f4;
+    write(f4);
+    f1 = f1 - 1;
+}while( f1 > 0 );
 }

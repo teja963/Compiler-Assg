@@ -41,7 +41,7 @@
 [ \t\n] {}
 "FUN" {return FUN;}
 [{}();] {return *yytext;}  //read again from the user
-[a-z]+ {
+[a-z]([a-z]|[0-9])* {
 		variable = (char*)malloc(sizeof(yytext));
 		strcpy(variable, yytext);
 		yylval.nptr = createTree(TYPE_INT, 0, NODE_ID, variable, NULL, NULL, NULL);

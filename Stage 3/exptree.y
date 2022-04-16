@@ -153,13 +153,8 @@ int yyerror(char const* s)
 	printf("yyerror %s\n", s);
 }
 
-int main(int argc, char *argv[]){
-	if (argc < 2){
-        printf("Enter filename Properly\n");
-        exit(1);
-    } 
-    else{
-        fp = fopen(argv[1], "r");
+int main(){
+        fp = fopen("test.txt", "r");
         targetFile = fopen("B191143CS.xsm", "w");
 	    fprintf(targetFile, "0\n2056\n0\n0\n0\n0\n0\n0\n");
 	    fprintf(targetFile, "MOV SP, 4095\n");
@@ -172,7 +167,6 @@ int main(int argc, char *argv[]){
         else{
             yyin = fp;
         }
-    }
 	yyparse();
 	return 0;
 }

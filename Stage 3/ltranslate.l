@@ -102,18 +102,18 @@ identifier [a-zA-Z0-9]+
 int yywrap(void) {
     if(!pass) {
        pass = 1;
-       yyin = fopen("target_file.xsm", "r");
+       yyin = fopen("B191143CS.xsm", "r");
        intermediate = fopen("intermediate.xsm", "w");
        return 0;
     }
 
-    remove("target_file.xsm");
-    rename("intermediate.xsm", "target_file.xsm");
+    remove("B191143CS.xsm");
+    rename("intermediate.xsm", "B191143CS.xsm");
     return 1;
 }
 
 int main() {
-   yyin = fopen("target_file.xsm", "r");
+   yyin = fopen("B191143CS.xsm", "r");
    yylex();
    return 0;
 }
