@@ -1,11 +1,11 @@
 all: 
 	yacc -d exptree.y
-	lex exptree.l
-	lex -o translate.yy.c ltranslate.l
+	lex -i exptree.l
 	gcc lex.yy.c y.tab.c -o a.out
-	gcc translate.yy.c -o l.out 
+	lex ltranslate.l
+	gcc lex.yy.c -o ltranslate.out
 	./a.out
-	./l.out
+	./ltranslate.out
 	
 clean:
-	rm -f lex.yy.c y.tab.c translate.yy.c y.tab.h a.out l.out B191143CS.xsm
+	rm -f lex.yy.c y.tab.c y.tab.h a.out ltranslate.out B191143CS.xsm
