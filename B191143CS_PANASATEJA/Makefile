@@ -4,7 +4,7 @@ all:
 	gcc lex.yy.c y.tab.c -o a.out
 	lex ltranslate.l
 	gcc lex.yy.c -o ltranslate.out
-	./a.out
+	./a.out $(input)
 	./ltranslate.out
 	
 clean:

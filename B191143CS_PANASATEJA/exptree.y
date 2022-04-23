@@ -153,8 +153,8 @@ int yyerror(char const* s)
 	printf("yyerror %s\n", s);
 }
 
-int main(){
-        fp = fopen("test.txt", "r");
+int main(int argc, char** argv){
+        fp = fopen(argv[1], "r");
         targetFile = fopen("B191143CS.xsm", "w");
 	    fprintf(targetFile, "0\n2056\n0\n0\n0\n0\n0\n0\n");
 	    fprintf(targetFile, "MOV SP, 4095\n");
