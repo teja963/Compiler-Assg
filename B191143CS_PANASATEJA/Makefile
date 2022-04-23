@@ -1,6 +1,6 @@
 all: 
 	yacc -d exptree.y
-	lex -i exptree.l
+	lex exptree.l
 	gcc lex.yy.c y.tab.c -o a.out
 	lex ltranslate.l
 	gcc lex.yy.c -o ltranslate.out
